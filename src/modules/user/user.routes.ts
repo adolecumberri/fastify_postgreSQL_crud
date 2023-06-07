@@ -3,7 +3,7 @@ import { FastifyInstance } from "fastify";
 import { registerUserHandler, loginHandler, getUsershandler } from "./user.controller";
 import { $ref } from "./user.schema";
 
-const userRoutes = async (server: FastifyInstance, options: any) => {
+const userRoutes = async (server: FastifyInstance) => {
 
     //el prefijo viene desde app.ts es api/user
     //el middleware de schema se añade al crearse el server. sino el for of no podría usarse.

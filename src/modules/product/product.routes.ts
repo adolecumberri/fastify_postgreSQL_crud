@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { createProductHandler, getProductsHandler } from "./product.controller";
 import { $ref } from "./product.schema";
 
-const productRoutes = (server: FastifyInstance) => {
+const productRoutes = async (server: FastifyInstance) => {
     server.post('/',
         {
             preHandler: [server.auth],

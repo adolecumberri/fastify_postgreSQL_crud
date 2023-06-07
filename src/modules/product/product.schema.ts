@@ -9,7 +9,7 @@ const productInput = {
 
 const productGenerated = {
     id: z.number(),
-    createAt: z.string(),
+    createdAt: z.string(),
     updatedAt: z.string(),
 }
 
