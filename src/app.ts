@@ -1,5 +1,7 @@
 import Fastify from 'fastify';
 
+import userRoutes from './modules/user/user.routes';
+
 const server = Fastify();
 
 server.get('/', async () => {
@@ -7,6 +9,12 @@ server.get('/', async () => {
 });
 
 async function start() {
+
+    server.register( userRoutes, {
+        prefix: 'api/users'
+    })
+
+
     try {
         //0.0.0.0 seen in a tutorial. for Docker connections.
         await server.listen({
