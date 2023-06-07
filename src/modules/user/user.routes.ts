@@ -1,13 +1,13 @@
 
 import { FastifyInstance } from "fastify";
-import registerUserHandler from "./user.controller";
+import { registerUserHandler, loginHandler, getUsershandler } from "./user.controller";
 import { $ref } from "./user.schema";
 
-const userRoutes = async (fastify: FastifyInstance, options: any) => {
-    
+const userRoutes = async (server: FastifyInstance, options: any) => {
+
     //el prefijo viene desde app.ts es api/user
     //el middleware de schema se añade al crearse el server. sino el for of no podría usarse.
-    fastify.post('/',{
+    server.post('/', {
         schema: {
             body: $ref('createUserSchema'),
             response: {
@@ -15,5 +15,24 @@ const userRoutes = async (fastify: FastifyInstance, options: any) => {
             },
         }
     }, registerUserHandler);
+
+    server.post('/login',
+        {
+            schema: {
+                body: $ref('loginSchema'),
+                response: {
+                    200: $ref('loginResponseSchema')
+                },
+
+            }
+        },
+        loginHandler)
+
+    server.get('/',
+        {
+            preHandler: [server.auth],
+        },
+        getUsershandler)
+
 }
 export default userRoutes;
