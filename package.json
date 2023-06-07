@@ -1,4 +1,13 @@
 {
+  "name": "hiring_adolfo",
+  "version": "1.0.0",
+  "description": "technical test",
+  "main": "index.js",
+  "author": "adolecumberri <adolfo.reyes@orbitalads.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts"
+  },
   "dependencies": {
     "@prisma/client": "^4.15.0",
     "fastify": "^4.17.0",
