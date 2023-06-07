@@ -2,14 +2,28 @@ import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import fastifyJwt from '@fastify/jwt'
 import userRoutes from './modules/user/user.routes';
 import { userSchemas } from './modules/user/user.schema';
+import { productSchemas } from './modules/product/product.schema';
+import productRoutes from './modules/product/product.routes';
 
 const server = Fastify();
 
+//giving global scope to auth.
 declare module 'fastify' {
     interface FastifyInstance {
-        auth: (request: FastifyRequest, reply: FastifyReply) => Promise<void>
+        auth: any
     }
 }
+
+declare module '@fastify/jwt' {
+    interface FastifyJWT {
+        user: {
+            email: string,
+            id: number,
+            name: string
+        }
+    }
+}
+
 
 server.register(fastifyJwt, {
     secret: 'bruh_what_a_morning',
@@ -32,13 +46,18 @@ server.get('/', async () => {
 
 async function start() {
 
-    for (const schema of userSchemas) {
+    /* SCHEMAS */
+    for (const schema of [...userSchemas, ...productSchemas]) {
         server.addSchema(schema);
     }
 
+    /* ROUTES */
     server.register(userRoutes, {
         prefix: 'api/users'
-    })
+    });
+    server.register(productRoutes, {
+        prefix: 'api/products'
+    });
 
 
     try {

@@ -47,4 +47,4 @@ export const {
     createUserResponseSchema,
     loginSchema,
     loginResponseSchema
-})
+},  { $id: "UserSchema", } )
